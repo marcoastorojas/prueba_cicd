@@ -28,5 +28,25 @@ jobs:
         context: .
         push: true
         tags: marcoastorojas/app-prueba:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: SSH into VM and deploy
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: 144.22.194.20
+        username: ubuntu
+        key: ${{ secrets.VM_KEY }}
+        script: |
+          docker pull username/repo:tag
+          docker stop <container-name> || true
+          docker rm <container-name> || true
+          docker run -d -p 4200:80 marcoastorojas/app-prueba
+
 
   
