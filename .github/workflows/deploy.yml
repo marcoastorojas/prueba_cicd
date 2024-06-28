@@ -43,10 +43,10 @@ jobs:
         username: ubuntu
         key: ${{ secrets.VM_KEY }}
         script: |
-          docker pull username/repo:tag
-          docker stop <container-name> || true
-          docker rm <container-name> || true
-          docker run -d -p 4200:80 marcoastorojas/app-prueba
+          docker pull marcoastorojas/app-prueba
+          docker stop prueba1 || true
+          docker rm prueba1 || true
+          docker run --name prueba1  -d -p 4200:80 marcoastorojas/app-prueba
 
 
   
